@@ -10,12 +10,6 @@ import java.sql.SQLException;
 public class DBConnection {
 
 	public static void main(String[] args) {
-		//SelectBank();
-		Selectkhcafe();
-	}
-	static void SelectBank() {
-		
-		
 		// 1.드라이버 연결 : Oracle JDBC 드라이버 클래스 이름
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		//2.오라클 내 컴퓨터 연결 : 데이터베이스 연결 정보
@@ -57,46 +51,14 @@ public class DBConnection {
 				System.out.println("");
 				
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	}
-	
-	static void Selectkhcafe() {
-		// 1.드라이버 연결 : Oracle JDBC 드라이버 클래스 이름
-		String driver = "oracle.jdbc.driver.OracleDriver";
-		//2.오라클 내 컴퓨터 연결 : 데이터베이스 연결 정보
-		//								나의 IP주소: port 번호
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String user = "khcafes";
-		String password = "khcafes";
-		Connection con = null; 
-		try {
-			con = DriverManager.getConnection(url, user, password);
-			System.out.println("연결 성공 !");
 			
-			//SELECT 쿼리
-			String selectQuery = "SELECT * FROM cafes";
-			PreparedStatement selectState = con.prepareStatement(selectQuery);
-			ResultSet result = selectState.executeQuery();
-			while(result.next()) {
-				int cafeID = result.getInt("cafe_id");
-				String cafeName = result.getString("c_name");
-				String cafeAddress = result.getString("c_address");
-				String operatingHours = result.getString("operating_hours");
-				
-				System.out.println("cafe ID : " + cafeID + " cafe Name : " +cafeName );
-				System.out.println("cafe Address : " + cafeAddress );
-				System.out.println("Operating Hours : " + operatingHours);
-				System.out.println(" ");
-			}
+			
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

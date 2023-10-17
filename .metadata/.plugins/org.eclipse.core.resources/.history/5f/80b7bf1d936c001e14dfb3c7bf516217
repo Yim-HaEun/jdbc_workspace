@@ -10,8 +10,7 @@ import java.sql.SQLException;
 public class DBConnection {
 
 	public static void main(String[] args) {
-		//SelectBank();
-		Selectkhcafe();
+		SelectBank();
 	}
 	static void SelectBank() {
 		
@@ -90,7 +89,6 @@ public class DBConnection {
 				System.out.println("cafe ID : " + cafeID + " cafe Name : " +cafeName );
 				System.out.println("cafe Address : " + cafeAddress );
 				System.out.println("Operating Hours : " + operatingHours);
-				System.out.println(" ");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
