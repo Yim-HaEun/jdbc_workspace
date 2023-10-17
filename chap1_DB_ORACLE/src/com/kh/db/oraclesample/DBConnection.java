@@ -11,7 +11,11 @@ public class DBConnection {
 
 	public static void main(String[] args) {
 		//SelectBank();
-		Selectkhcafe();
+		//Selectkhcafe();
+		//Selectsanrio_world();
+		//SelectIf();
+		//SelectIfkhcafe();
+		insertBank();
 	}
 	static void SelectBank() {
 		
@@ -78,16 +82,17 @@ public class DBConnection {
 			System.out.println("연결 성공 !");
 			
 			//SELECT 쿼리
-			String selectQuery = "SELECT * FROM cafes";
+			String selectQuery = "SELECT c_name,c_address,operating_hours FROM cafes ORDER BY cafe_id DESC";
 			PreparedStatement selectState = con.prepareStatement(selectQuery);
 			ResultSet result = selectState.executeQuery();
 			while(result.next()) {
-				int cafeID = result.getInt("cafe_id");
+				//int cafeID = result.getInt("cafe_id");
 				String cafeName = result.getString("c_name");
 				String cafeAddress = result.getString("c_address");
 				String operatingHours = result.getString("operating_hours");
 				
-				System.out.println("cafe ID : " + cafeID + " cafe Name : " +cafeName );
+				//System.out.println("cafe ID : " + cafeID );
+				System.out.println(" cafe Name : " +cafeName);
 				System.out.println("cafe Address : " + cafeAddress );
 				System.out.println("Operating Hours : " + operatingHours);
 				System.out.println(" ");
@@ -98,5 +103,153 @@ public class DBConnection {
 		}
 		
 	}
+	
+	static void Selectsanrio_world() {
 
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String user = "sanrio";
+		String password = "sanrio";
+		Connection con = null;
+		try {
+			con = DriverManager.getConnection(url,user,password);
+			System.out.println("연결성공 !");
+			//SELECT 쿼리
+			String selectQuery = "SELECT * FROM sanriofriends";
+			PreparedStatement selectState = con.prepareStatement(selectQuery);
+			ResultSet result = selectState.executeQuery();
+			while(result.next()) {
+				int Sanrio_ID = result.getInt("s_id");
+				String Sanrio_Name = result.getString("s_name");
+				String Sanrio_Character = result.getString("s_character");
+				String Sanrio_Color = result.getString("s_color");
+				String Sanrio_Kind = result.getString("s_kind");
+				
+				System.out.println("산리오 번호 : " + Sanrio_Name + " 산리오 캐릭터 이름 : "+ Sanrio_Name);
+				System.out.println("성격 : " + Sanrio_Character + "  색상 : " + Sanrio_Color);
+				System.out.println("정체 : " + Sanrio_Kind);
+				System.out.println("");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	static void SelectIf() {
+				String url = "jdbc:oracle:thin:@localhost:1521:xe";
+				String user = "khbank";
+				String password = "khbank";
+				Connection con = null; 
+				
+				try {
+					con = DriverManager.getConnection(url,user,password);
+					//where절 사용하여 조건추가
+					String selectQuery = "SELECT * FROM BANK WHERE account_name in(?,?) ";
+					
+					PreparedStatement selectState = con.prepareStatement(selectQuery);
+					
+					//여기에 원하는 조건의 account_id 설정
+					String[] targetAN = {"나부자","나거지"};
+					selectState.setString(1, targetAN[0]);
+					selectState.setString(2, targetAN[1]);
+					
+					/**조건 설정
+					selectState.setString(1,targetAID); // 1자리값
+					*/
+					ResultSet result = selectState.executeQuery();
+					//값 존재여부
+					if(!result.isBeforeFirst()) { //데이터가 없을때
+						System.out.println("존재하는 데이터가 없습니다.");
+					}
+					while(result.next()) {
+						int a = result.getInt("account_id");
+						String b = result.getString("account_number");
+						String c = result.getString("account_name");
+						double d = result.getDouble("balance");
+						String e = result.getString("branch_name");
+						Date f = result.getDate("last_transaction_date");
+						
+		
+
+						System.out.println("ACCOUNT_ID : " + a);
+						System.out.println("ACCOUNT_Number : " + b);
+						System.out.println("ACCOUNT_Name : " + c);
+						System.out.println("Balance : " + d);
+						System.out.println("Branch_Name : " + e);
+						System.out.println("Last_Transaction_Date : " + f);
+						System.out.println("");
+						
+					//}else {
+						//System.out.println("조건에 해당하는 데이터가 없습니다.");
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	}
+	static void SelectIfkhcafe() {
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url ="jdbc:oracle:thin:@localhost:1521:xe";
+		String user = "khcafes";
+		String password = "khcafes";
+		Connection con = null;
+		try {
+			con = DriverManager.getConnection(url,user,password);
+			
+			//Select 쿼리
+			String selectQuery = "SELECT cafe_id, menu_name, price FROM MENU WHERE menu_id in(?,?,?)";
+			
+			PreparedStatement selectState = con.prepareStatement(selectQuery);
+			
+			int[] targetAID = {10,11,12};
+			selectState.setInt(1, targetAID[0]);
+			selectState.setInt(2, targetAID[1]);
+			selectState.setInt(3, targetAID[2]);
+			
+			ResultSet result = selectState.executeQuery();
+			if(!result.isBeforeFirst()) {
+				System.out.println("값이 존재하지않습니다.");
+			}
+				while(result.next()) {
+					int cafeID = result.getInt("cafe_id");
+					String menuName = result.getString("menu_name");
+					double Price = result.getDouble("price");
+					
+					System.out.println("CAFE_ID : " + cafeID + " MENU : " + menuName + "PRICE : $" +Price);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	static void insertBank() {
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String user = "khbank";
+		String password = "khbank";
+		Connection con = null; 
+		
+		try {
+			con = DriverManager.getConnection(url,user,password);
+			String insertQuery = "INSERT INTO BANK(account_id, account_number, account_name, balance, branch_name, last_transaction_date) "
+					+ "VALUES(?, ?, ?, ?, ?, ?)";
+			PreparedStatement insertState = con.prepareStatement(insertQuery);
+			insertState.setInt(1, 14);
+			insertState.setString(2, "1104827261");
+			insertState.setString(3, "하은임");
+			insertState.setDouble(4, 1500.00);
+			insertState.setString(5, "kh");
+			insertState.setDate(6, Date.valueOf("2023-10-16"));
+			
+			int rowsInsert = insertState.executeUpdate();
+			System.out.println(rowsInsert + "row에 추가됨");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
