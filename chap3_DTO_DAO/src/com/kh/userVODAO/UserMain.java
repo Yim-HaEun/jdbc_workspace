@@ -19,6 +19,54 @@ public class UserMain {
 		um.selectScanner();
 		um.insertRun();
 	}
+	//boolean idTrue = checkId(userId);
+	public boolean checkEmail(String email) throws SQLException {
+		String jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
+		String dbUserName = "khcafes";
+		String dbPassWord = "khcafes";
+
+		Connection connection = DriverManager.getConnection(jdbcURL, dbUserName, dbPassWord);
+		
+		String sql = "SELECT COUNT(*) FROM userinfo WHERE email = ? ";
+		PreparedStatement st = connection.prepareStatement(sql);
+		st.setString(1, email);
+		ResultSet rs = st.executeQuery();
+		if(rs.next()) {
+			int count = rs.getInt(1);
+			return count > 0; //1이상이면 true
+		}
+		
+		
+		return false;
+		
+	}
+	public boolean checkId(int userId) throws SQLException{
+		//1.db연결
+		String jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
+		String dbUserName = "khcafes";
+		String dbPassWord = "khcafes";
+
+		Connection connection = DriverManager.getConnection(jdbcURL, dbUserName, dbPassWord);
+			
+		//2.SQL
+		String sql = "SELECT * FROM USERINFO WHERE user_id = ?";
+		PreparedStatement st = connection.prepareStatement(sql);
+		st.setInt(1, userId);
+		//3.if 활용해서 Result.next()
+			
+		ResultSet rs = st.executeQuery();
+		if(rs.next()) {
+			int id = rs.getInt(1);
+			//return >0 1 이상이면 일치
+			return id > 0; //이상이면 true
+				
+		}
+			
+		return false; //일치하지 않을 때
+		
+	}
+	
+
 	public void selectScanner() {
 		String jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
 		String dbUserName = "khcafes";
@@ -58,19 +106,22 @@ public class UserMain {
 					System.out.println("Registration Date : " + rs.getDate("reg_date"));
 				}else {
 					//boolean ID or Email 하나가 일치하지 않는 경우 처리
-					boolean idTrue = (Integer.parseInt(input) == (userId));
-					boolean emailTrue = (input1 == (email));
+					//boolean idTrue = (Integer.parseInt(input) == (userId));
+					boolean idTrue = checkId(userId);
+					boolean emailTrue = checkEmail(userEmail);
+					//boolean emailTrue = (input1 == (email));
 					if(!idTrue && emailTrue) {
 						System.out.println("일치하지않는 User ID입니다.");
+						System.out.println();
 					}else if (idTrue && !emailTrue) {
 						System.out.println("일치하지 않는 User Email입니다.");
+						System.out.println();
 					}
 					else {
 					System.out.println("일치하는 User Id와 email을 찾을 수 없습니다.");
 					System.out.println();
+					}
 				}
-			}
-			
 			}
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
