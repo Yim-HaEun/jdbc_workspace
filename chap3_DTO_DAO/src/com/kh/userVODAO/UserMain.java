@@ -34,9 +34,7 @@ public class UserMain {
 		if(rs.next()) {
 			int count = rs.getInt(1);
 			return count > 0; //1이상이면 true
-		}
-		
-		
+		}		
 		return false;
 		
 	}
@@ -61,11 +59,8 @@ public class UserMain {
 			return id > 0; //이상이면 true
 				
 		}
-			
 		return false; //일치하지 않을 때
-		
 	}
-	
 
 	public void selectScanner() {
 		String jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -108,7 +103,7 @@ public class UserMain {
 					//boolean ID or Email 하나가 일치하지 않는 경우 처리
 					//boolean idTrue = (Integer.parseInt(input) == (userId));
 					boolean idTrue = checkId(userId);
-					boolean emailTrue = checkEmail(userEmail);
+					boolean emailTrue = checkEmail(email);
 					//boolean emailTrue = (input1 == (email));
 					if(!idTrue && emailTrue) {
 						System.out.println("일치하지않는 User ID입니다.");
