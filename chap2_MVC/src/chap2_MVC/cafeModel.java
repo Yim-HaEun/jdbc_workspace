@@ -71,6 +71,7 @@ public class cafeModel {
 			String sql = "DELETE FROM cafes WHERE cafe_id = ?";
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setInt(1, cafeId);
+			
 			st.executeUpdate();
 			
 			
