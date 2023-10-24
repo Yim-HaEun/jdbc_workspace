@@ -122,9 +122,7 @@ public class UserMain {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-			
-		
+	
 	}
  
 	public void selectAll() {

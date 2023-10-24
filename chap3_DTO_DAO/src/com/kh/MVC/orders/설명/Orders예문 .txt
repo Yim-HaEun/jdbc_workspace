@@ -1,0 +1,7 @@
+OrderDTO ->멤버변수 생성자 getter setter
+OrderDAO -> DateBase연결 후 select 작성
+OrderView -> 보여지는 화면 출력
+OrderController ->DAO view 가격 계산 메소드
+OrderMain -> 최종 실행
+
+

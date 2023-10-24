@@ -32,7 +32,6 @@ public class UserDAO {
 			return false;
 		}
 	}
-
 	public List<UserVO> getAllUsers() throws SQLException {
 		List<UserVO> users = new ArrayList<>();
 		String sql = "SELECT * FROM USERINFO";
@@ -50,7 +49,6 @@ public class UserDAO {
 				user.setRegDate(rs.getDate("reg_date"));
 				
 				users.add(user);
-			
 			}
 		}
 		 return users;	
