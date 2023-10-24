@@ -181,7 +181,7 @@ public class cafeExam {
 		String password = "khcafes";
 		try {
 			Connection con = DriverManager.getConnection(jdbcUrl, uesrname, password);
-			String deleteQuery = "DELETE  FROM cafes CASCADE WHERE cafe_id = ? ";
+			String deleteQuery = "DELETE CASCADE  FROM cafes WHERE cafe_id = ? ";
 			PreparedStatement deletePS = con.prepareStatement(deleteQuery);
 			deletePS.setInt(1, 5);
 			

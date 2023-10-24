@@ -14,7 +14,9 @@ public class updateSample {
 		
 		try {
 			Connection con = DriverManager.getConnection(jdbcUrl, uesrname, password);
+			
 			String updateQuery = "UPDATE BANK SET balance = ? WHERE account_number = ?";
+			
 			PreparedStatement updatePs = con.prepareStatement(updateQuery);
 			
 			updatePs.setDouble(1, 2000.00);
